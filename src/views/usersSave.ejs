@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+ <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="/assets/style.css" type=text/css rel=stylesheet />
+        <title>  Usuarios </title>
+    </head>
+    <body>
+        <header>
+            <h1>USUARIOS</h1>
+        </header>
+        <!-- Formulario para busquedas-->
+        <form action="/find" method="POST">
+            <label for="criterio"> Criterio:   </label>
+            <input type="text" id="criteria" name="criteria">
+            <input type="submit" value="Buscar"><br><br>
+        </form>
+        <table>
+            <thead>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Password</th>
+                <th></th>
+                <th></th>
+            </thead>
+
+            <!-- Despliega la informacion de los usuarios -->
+            <% Object.keys(Users).forEach(function(prop) { %>
+            <tr>
+            <td> <%= Users[prop].name %> </td> 
+            <td> <%= Users[prop].email %> </td>
+            <td> <%= Users[prop].password%> </td>
+            <td><a href="<%= `findById/${Users[prop]._id}` %>">Editar</a></td> <!-- Redirecciona a que modifiques los datos -->
+            <td><a href="<%= `deleteUser/${Users[prop]._id}`%>" onclick="return confirmar()" class="delete"> Borrar </a></td> <!-- Elimnar al usuario. -->
+            </tr>
+        <%});%>
+        </table>
+
+        <div id="agregarUsuario">
+            <a href="addUser">Agregar</a> <!-- Redirecciona a la pagina para registrar un nuevo usuario. -->
+        </div>
+
+
+        <!--Se mustra una alerta para confirmar que se desea eliminar un usuaro de la BD-->
+        <script type="text/javascript">
+            function confirmar() 
+            {
+                let respuesta = confirm('¿Está seguro de querer eliminar este usuario?'); // Muestra un mensaje y recoje la respuesta (en valores booleanos) para almacenarla en la variable. 
+                //Haciendo uso de la variable respuesta determina la accion de eliminar. 
+                if(respuesta){
+                    return true; 
+                }else{ 
+                    return false; 
+                }
+            }
+        </script>
+    </body>
+</html> 
